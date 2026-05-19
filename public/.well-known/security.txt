@@ -1,0 +1,6 @@
+Contact: mailto:security@neuronx.ai
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://vectra-ai-engine.lovable.app/.well-known/security.txt
+Policy: https://vectra-ai-engine.lovable.app/security
+Acknowledgments: https://vectra-ai-engine.lovable.app/security

@@ -1,0 +1,12 @@
+{
+  "name": "NeuronX",
+  "short_name": "NeuronX",
+  "icons": [
+    { "src": "/favicon-dark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/favicon-mono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "monochrome" }
+  ],
+  "theme_color": "#0F172A",
+  "background_color": "#0F172A",
+  "display": "standalone",
+  "start_url": "/"
+}

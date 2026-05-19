@@ -1,0 +1,36 @@
+# NeuronX
+
+> NeuronX is an AI consulting and engineering partner. We help enterprises and startups turn AI into measurable business outcomes — from strategy to production AI systems.
+
+## Pages
+
+- [Home](/): AI solutions partner — strategy, engineering, and operations under one roof.
+- [About](/about): Who we are and how we work.
+- [Solutions](/solutions): Custom AI solutions, agents, copilots, and automation.
+- [Industries](/industries): Industries we serve and domain expertise.
+- [Case Studies](/case-studies): Customer outcomes from production AI deployments.
+- [Insights](/insights): Articles on applied AI, architecture, and operations.
+- [Security](/security): SOC 2, SSO/SAML, VPC and on-prem deployment options.
+- [FAQ](/faq): Common questions on engagement, pricing, and security.
+- [Careers](/careers): Open roles at NeuronX.
+- [Contact](/contact): Get in touch.
+- [Book](/book): Book a strategy session.
+
+## Flagship Solutions
+
+- [AI Voice Agents](/solutions/ai-voice-agents): Inbound and outbound voice agents handling calls 24/7.
+- [Predictive Pricing Engine](/solutions/predictive-pricing-engine): Forecasting and dynamic pricing models on your data.
+- [Custom GPT & Copilots](/solutions/custom-gpt-copilots): Domain-trained copilots for sales, support, ops.
+- [Internal Search AI](/solutions/internal-search-ai): Hybrid semantic search across every doc, ticket, and channel.
+- [AI Workflow Automation](/solutions/ai-workflow-automation): Multi-step agents that take action across your stack.
+- [Proposal & Document AI](/solutions/proposal-document-ai): Generate proposals, reports, and contracts from your templates.
+
+## Examples
+
+- [Rouse Navigator case study](/case-studies/rouse-navigator)
+- [FinTech Risk Analyzer case study](/case-studies/fintech-risk-analyzer)
+
+## Optional
+
+- [Privacy Policy](/privacy)
+- [Terms of Service](/terms)
