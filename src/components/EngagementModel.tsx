@@ -11,7 +11,7 @@ export function EngagementModel() {
   return (
     <section className="section">
       <div className="container-wide">
-        <div className="max-w-2xl">
+        <div className="reveal max-w-2xl">
           <span className="eyebrow">How we engage</span>
           <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-4xl">
             <span className="text-gradient">From first conversation to operating system — in weeks.</span>
@@ -22,7 +22,7 @@ export function EngagementModel() {
         </div>
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {phases.map((p, i) => (
-            <div key={p.label} className="relative rounded-2xl border border-border bg-surface/60 p-6">
+            <div key={p.label} className={`relative rounded-2xl border border-border bg-surface/60 p-6 reveal reveal-delay-${i + 1}`}>
               <div className="font-mono text-xs text-muted-foreground">0{i + 1}</div>
               <p.icon className="mt-3 h-5 w-5 text-primary" />
               <h3 className="mt-3 text-base font-semibold">{p.label}</h3>

@@ -12,6 +12,7 @@ import { StackStrip } from "@/components/StackStrip";
 import { SecurityBand } from "@/components/SecurityBand";
 import { EngagementModel } from "@/components/EngagementModel";
 import { IndustriesGrid } from "@/components/IndustriesGrid";
+import { LogoStrip } from "@/components/LogoStrip";
 import timelineDiscovery from "@/assets/timeline-discovery.jpg";
 import timelineDiscovery480 from "@/assets/timeline-discovery-480.jpg";
 import timelineDiscovery768 from "@/assets/timeline-discovery-768.jpg";
@@ -40,6 +41,13 @@ import timelineDeploymentWebp from "@/assets/timeline-deployment.webp";
 import timelineDeploymentWebp480 from "@/assets/timeline-deployment-480.webp";
 import timelineDeploymentWebp768 from "@/assets/timeline-deployment-768.webp";
 import { ArrowRight, Shield, Zap, Target, Users, Sparkles } from "lucide-react";
+import fortuneImg from "@/assets/images/hero-section/fortune-500-insurer.jpeg";
+import logisticsImg from "@/assets/images/hero-section/global-logistics.png";
+import healthImg from "@/assets/images/hero-section/top-10-us-health-system.png";
+import fintechImg from "@/assets/images/hero-section/public-fintech.png";
+import euImg from "@/assets/images/hero-section/eu-industrial-group.png";
+import saasImg from "@/assets/images/hero-section/series-c-saas.png";
+import strategyDiscoveryImg from "@/assets/images/strategy/discovery.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -100,7 +108,7 @@ function HomePage() {
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
         </div>
 
-        <div className="container-wide relative pb-20 pt-28 md:pb-28 md:pt-36">
+        <div className="container-wide relative pb-10 pt-18 md:pb-18 md:pt-26">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
             <div className="animate-fade-up">
               <span className="eyebrow">
@@ -132,26 +140,35 @@ function HomePage() {
               <p className="mt-3 text-xs text-muted-foreground">
                 30 min · Run by an engineer · Walk away with an ROI + opportunity map.
               </p>
-              <div className="mt-10 border-t border-border/60 pt-6">
+              {/* <div className="mt-10 border-t border-border/60 pt-6">
                 <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70">
                   Trusted by teams shipping AI in production
                 </p>
-                <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-sm text-muted-foreground/80">
+                <div className="mt-4 grid grid-cols-3 gap-2">
                   {[
-                    "Fortune 500 Insurer",
-                    "Global Logistics Operator",
-                    "Top-10 US Health System",
-                    "Public FinTech",
-                    "EU Industrial Group",
-                    "Series C SaaS",
-                  ].map((n) => (
-                    <span key={n} className="transition-colors hover:text-foreground">{n}</span>
+                    { label: "Fortune 500 Insurer",       sub: "Insurance",      img: fortuneImg   },
+                    { label: "Global Logistics",           sub: "Supply Chain",   img: logisticsImg },
+                    { label: "Top-10 Health System",       sub: "Healthcare",     img: healthImg    },
+                    { label: "Public FinTech",             sub: "Finance",        img: fintechImg   },
+                    { label: "EU Industrial Group",        sub: "Manufacturing",  img: euImg        },
+                    { label: "Series C SaaS",              sub: "AI Platform",    img: saasImg      },
+                  ].map(({ label, sub, img }) => (
+                    <div
+                      key={label}
+                      className="group flex flex-col items-center gap-1.5 rounded-lg border border-border/60 bg-surface/40 px-2 py-3 text-center transition-colors hover:border-primary/30 hover:bg-surface"
+                    >
+                      <div className="h-8 w-8 overflow-hidden rounded-md">
+                        <img src={img} alt={label} className="h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-100" />
+                      </div>
+                      <p className="text-[11px] font-semibold leading-tight text-foreground/80">{label}</p>
+                      <p className="text-[10px] text-muted-foreground/60">{sub}</p>
+                    </div>
                   ))}
                 </div>
-                <p className="mt-2 text-[10px] text-muted-foreground/60">
-                  Client names withheld under NDA. References available on qualified request.
+                <p className="mt-3 text-[10px] text-muted-foreground/50">
+                  Client names withheld under NDA · References on request
                 </p>
-              </div>
+              </div> */}
               <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                 <span>SOC 2 Type II</span>
                 <span className="opacity-40">•</span>
@@ -172,10 +189,12 @@ function HomePage() {
         </div>
       </section>
 
+      <LogoStrip />
+
       {/* STRATEGY → PRODUCTION TIMELINE */}
       <section className="section-tight border-b border-border">
         <div className="container-wide">
-          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div className="reveal flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="eyebrow">From strategy to production</span>
               <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
@@ -194,6 +213,7 @@ function HomePage() {
                 label: "Discovery",
                 time: "Week 1–2",
                 desc: "Opportunity audit, ROI model, success metrics, and a prioritized roadmap.",
+                singleImg: strategyDiscoveryImg,
                 img: timelineDiscovery,
                 img480: timelineDiscovery480,
                 img768: timelineDiscovery768,
@@ -240,32 +260,42 @@ function HomePage() {
             ].map((p, i, arr) => (
               <li
                 key={p.step}
-                className="group relative overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 transition-colors hover:border-primary/40"
+                className={`group relative overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 transition-colors hover:border-primary/40 reveal reveal-delay-${i + 1}`}
               >
                 <div className="relative -mx-6 -mt-6 mb-5 h-40 overflow-hidden border-b border-border bg-[oklch(0.16_0.02_260)]">
-                  <picture>
-                    <source
-                      type="image/avif"
-                      srcSet={`${p.avif480} 480w, ${p.avif768} 768w, ${p.avif} 1024w`}
-                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
-                    />
-                    <source
-                      type="image/webp"
-                      srcSet={`${p.webp480} 480w, ${p.webp768} 768w, ${p.webp} 1024w`}
-                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
-                    />
+                  {"singleImg" in p && p.singleImg ? (
                     <img
-                      src={p.img}
-                      srcSet={`${p.img480} 480w, ${p.img768} 768w, ${p.img} 1024w`}
-                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
+                      src={p.singleImg}
                       alt={p.alt}
-                      width={1024}
-                      height={640}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                     />
-                  </picture>
+                  ) : (
+                    <picture>
+                      <source
+                        type="image/avif"
+                        srcSet={`${p.avif480} 480w, ${p.avif768} 768w, ${p.avif} 1024w`}
+                        sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
+                      />
+                      <source
+                        type="image/webp"
+                        srcSet={`${p.webp480} 480w, ${p.webp768} 768w, ${p.webp} 1024w`}
+                        sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
+                      />
+                      <img
+                        src={p.img}
+                        srcSet={`${p.img480} 480w, ${p.img768} 768w, ${p.img} 1024w`}
+                        sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
+                        alt={p.alt}
+                        width={1024}
+                        height={640}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      />
+                    </picture>
+                  )}
                   <div
                     className="pointer-events-none absolute inset-0"
                     style={{
@@ -358,7 +388,7 @@ function HomePage() {
               style={{ background: "var(--gradient-hero)" }}
               aria-hidden
             />
-            <div className="relative">
+            <div className="reveal relative">
               <h2 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-5xl">
                 <span className="text-gradient">
                   Ready to apply AI to real business problems?

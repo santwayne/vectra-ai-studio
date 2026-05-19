@@ -36,7 +36,7 @@ function AboutPage() {
       <PageHero
         eyebrow="About NeuronX"
         title="An AI company built for the operational reality of business."
-        description="NeuronX — derived from vector: movement, direction, intelligence. We design and deploy custom AI systems that move companies forward."
+        description="NeuronX: movement, direction, intelligence. We design and deploy custom AI systems that move companies forward."
       />
 
       <section className="section">

@@ -25,7 +25,7 @@ export function Testimonials() {
   return (
     <section className="section">
       <div className="container-wide">
-        <div className="max-w-2xl">
+        <div className="reveal max-w-2xl">
           <span className="eyebrow">What clients say</span>
           <h2 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
             <span className="text-gradient">
@@ -35,8 +35,8 @@ export function Testimonials() {
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="glass-card flex flex-col p-8">
+          {testimonials.map((t, i) => (
+            <figure key={t.name} className={`glass-card flex flex-col p-8 reveal reveal-delay-${i + 1}`}>
               <Quote className="h-6 w-6 text-primary" />
               <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/90">
                 {t.quote}

@@ -1,6 +1,16 @@
+import industrialImg from "@/assets/images/hero-section/case-study/industrial.png";
+import fintechImg from "@/assets/images/hero-section/case-study/fintech-lending.png";
+import healthtechImg from "@/assets/images/hero-section/case-study/healthtech.png";
+
+export const INDUSTRY_IMAGES: Record<string, string> = {
+  Industrial: industrialImg,
+  "FinTech / Lending": fintechImg,
+  HealthTech: healthtechImg,
+};
+
 /**
- * Procedural cover art for case study cards. Each industry maps to a unique
- * vector composition so cards feel curated rather than generic.
+ * Cover art for case study cards.
+ * Industries with a real photo use it; others fall back to procedural SVG.
  */
 interface Props {
   industry: string;
@@ -26,6 +36,29 @@ function seed(s: string) {
 }
 
 export function CaseStudyArt({ industry, slug, className }: Props) {
+  const coverImg = INDUSTRY_IMAGES[industry];
+
+  if (coverImg) {
+    return (
+      <div className={`relative overflow-hidden ${className ?? ""}`}>
+        <img
+          src={coverImg}
+          alt={industry}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "linear-gradient(180deg, transparent 40%, oklch(0.14 0.012 260 / 0.75) 100%)" }}
+        />
+        <span className="absolute left-3 top-3 font-mono text-[9px] uppercase tracking-widest text-white/60">
+          {industry}
+        </span>
+      </div>
+    );
+  }
+
   const [a, b] = PALETTES[industry] ?? PALETTES.default;
   const h = seed(slug);
   const variant = h % 4;
