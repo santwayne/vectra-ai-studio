@@ -63,8 +63,7 @@ export function Footer() {
           <div className="grid gap-6 text-xs text-muted-foreground md:grid-cols-3">
             <div>
               <p className="font-semibold text-foreground">NeuronX Intelligence Inc.</p>
-              <p className="mt-1">Delaware C-Corp · EIN 88-XXXXXXX</p>
-              <p className="mt-1">D-U-N-S 00-000-0000</p>
+              
             </div>
             <div>
               <p className="font-semibold text-foreground">Headquarters</p>

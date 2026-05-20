@@ -1,6 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Filter } from "lucide-react";
+import { ArrowRight, Cpu, MessageSquare, TrendingUp, Database, GitBranch } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { caseStudies } from "@/data/caseStudies";
 import {
   ALL_CAPABILITIES,
@@ -10,15 +11,7 @@ import {
 } from "@/lib/case-capabilities";
 import { CaseStudyArt } from "@/components/illustrations/CaseStudyArt";
 
-/**
- * Filterable, horizontally-scrolling case-studies carousel.
- *
- * - Filter chips for Industry and AI Capability (multi-toggle, OR within a group, AND across groups).
- * - Snap-scrolling track with prev/next controls.
- * - Each card links to the case study detail page.
- */
 export function CaseStudiesCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
   const [industry, setIndustry] = useState<string | null>(null);
   const [capability, setCapability] = useState<Capability | null>(null);
 
@@ -37,119 +30,130 @@ export function CaseStudiesCarousel() {
     });
   }, [enriched, industry, capability]);
 
-  const scrollBy = (dir: 1 | -1) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>("[data-card]");
-    const step = card ? card.offsetWidth + 20 : el.clientWidth * 0.8;
-    el.scrollBy({ left: step * dir, behavior: "smooth" });
-  };
+  const countFor = (ind: string | null) =>
+    ind === null ? enriched.length : enriched.filter((s) => s.industry === ind).length;
 
   return (
     <section className="section relative overflow-hidden">
       <div className="container-wide">
-        <div className="reveal flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <span className="eyebrow">Case studies</span>
-            <h2 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
-              <span className="text-gradient">
-                Production AI, shipping outcomes.
-              </span>
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Filter by industry or AI capability to find work that mirrors
-              your roadmap.
-            </p>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => scrollBy(-1)}
-              aria-label="Previous"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface text-foreground transition-colors hover:bg-surface-elevated"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => scrollBy(1)}
-              aria-label="Next"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface text-foreground transition-colors hover:bg-surface-elevated"
-            >
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Filters */}
-        <div className="reveal mt-10 space-y-4">
-          <FilterRow
-            icon={<Filter className="h-3.5 w-3.5" />}
-            label="Industry"
-            options={industries}
-            value={industry}
-            onChange={setIndustry}
-          />
-          <FilterRow
-            icon={<Filter className="h-3.5 w-3.5" />}
-            label="Capability"
-            options={ALL_CAPABILITIES as readonly string[]}
-            value={capability}
-            onChange={(v) => setCapability(v as Capability | null)}
-          />
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            {filtered.length} {filtered.length === 1 ? "study" : "studies"}
+        {/* Header */}
+        <div className="reveal max-w-2xl">
+          <span className="eyebrow">Case studies</span>
+          <h2 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
+            <span className="text-gradient">Production AI, shipping outcomes.</span>
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Browse by industry or filter by AI capability to find work that mirrors your roadmap.
           </p>
         </div>
 
-        {/* Carousel track */}
-        <div className="relative mt-8">
-          {/* Edge fades */}
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-background to-transparent"
-            aria-hidden
-          />
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background to-transparent"
-            aria-hidden
-          />
+        {/* Industry tab bar */}
+        <div className="reveal mt-10">
+          <div className="relative">
+            {/* right fade to hint at overflow */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" aria-hidden />
+            <div
+              className="flex border-b border-border overflow-x-auto"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {[null, ...industries].map((ind) => {
+                const active = industry === ind;
+                return (
+                  <button
+                    key={ind ?? "__all__"}
+                    type="button"
+                    onClick={() => setIndustry(ind)}
+                    className={`relative shrink-0 flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors ${
+                      active
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground/80"
+                    }`}
+                  >
+                    {ind ?? "All"}
+                    <span
+                      className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] tabular-nums ${
+                        active
+                          ? "bg-primary/15 text-primary"
+                          : "bg-surface text-muted-foreground/50"
+                      }`}
+                    >
+                      {countFor(ind)}
+                    </span>
+                    {active && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-t-full bg-primary" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
+          {/* Capability chips row */}
+          <div className="mt-3 flex flex-wrap items-center gap-1.5">
+            <span className="mr-1 flex shrink-0 items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/40">
+              <Cpu className="h-3 w-3" /> Capability
+            </span>
+            <CapChip active={capability === null} onClick={() => setCapability(null)}>All</CapChip>
+            {(ALL_CAPABILITIES as readonly string[]).map((opt) => {
+              const Icon = CAPABILITY_ICONS[opt as Capability];
+              return (
+                <CapChip
+                  key={opt}
+                  active={capability === opt}
+                  onClick={() => setCapability(capability === opt ? null : (opt as Capability))}
+                  icon={Icon}
+                >
+                  {opt}
+                </CapChip>
+              );
+            })}
+            <span className="ml-auto shrink-0 font-mono text-xs tabular-nums text-muted-foreground/40">
+              {filtered.length} {filtered.length === 1 ? "study" : "studies"}
+            </span>
+          </div>
+        </div>
+
+        {/* Card grid */}
+        <div className="mt-8">
           {filtered.length === 0 ? (
             <div className="glass-card flex min-h-[200px] items-center justify-center p-10 text-center text-muted-foreground">
-              No case studies match these filters yet — try a different
-              combination.
+              No case studies match these filters — try a different combination.
             </div>
           ) : (
             <div
-              ref={trackRef}
-              className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2"
-              style={{ scrollbarWidth: "none" }}
+              key={`${industry ?? "all"}-${capability ?? "all"}`}
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
             >
-              {filtered.map((s) => (
+              {filtered.map((s, i) => (
                 <Link
                   key={s.slug}
                   to="/case-studies/$slug"
                   params={{ slug: s.slug }}
-                  data-card
-                  className="glass-card glow-card hover-lift group relative flex w-[320px] shrink-0 snap-start flex-col justify-between overflow-hidden p-0 sm:w-[380px]"
+                  className="glass-card glow-card hover-lift group relative flex flex-col overflow-hidden p-0 animate-fade-up"
+                  style={{ animationDelay: `${i * 45}ms`, animationDuration: "0.45s" }}
                 >
-                  <div className="relative h-32 w-full overflow-hidden border-b border-border">
+                  {/* Art banner */}
+                  <div className="relative h-36 w-full overflow-hidden border-b border-border">
                     <CaseStudyArt industry={s.industry} slug={s.slug} className="h-full w-full" />
-                  </div>
-                  <div className="relative p-7">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-primary/80">
+                    {/* industry badge over image */}
+                    <span className="absolute left-4 top-4 rounded-full border border-border/50 bg-background/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary/90 backdrop-blur-sm">
                       {s.industry}
                     </span>
-                    <h3 className="mt-3 text-xl font-semibold tracking-tight">
+                  </div>
+
+                  <div className="relative flex flex-1 flex-col p-6">
+                    <h3 className="text-lg font-semibold leading-snug tracking-tight">
                       {s.name}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-2">
                       {s.tagline}
                     </p>
 
                     {/* Top metric */}
                     {s.metrics[0] && (
-                      <div className="mt-5 flex items-baseline gap-2">
-                        <span className="text-shimmer text-2xl font-semibold">
+                      <div className="mt-4 flex items-baseline gap-2">
+                        <span className="text-shimmer text-2xl font-semibold leading-none">
                           {s.metrics[0].value}
                         </span>
                         <span className="text-xs text-muted-foreground">
@@ -159,7 +163,7 @@ export function CaseStudiesCarousel() {
                     )}
 
                     {/* Capability tags */}
-                    <div className="mt-4 flex flex-wrap gap-1.5">
+                    <div className="mt-3 flex flex-wrap gap-1.5">
                       {s.capabilities.slice(0, 3).map((c) => (
                         <span
                           key={c}
@@ -170,7 +174,7 @@ export function CaseStudiesCarousel() {
                       ))}
                     </div>
 
-                    <div className="mt-7 flex items-center gap-2 text-sm text-foreground/80 transition-all group-hover:gap-3 group-hover:text-foreground">
+                    <div className="mt-5 flex items-center gap-2 text-sm text-foreground/80 transition-all group-hover:gap-3 group-hover:text-foreground">
                       Read case study <ArrowRight className="h-4 w-4" />
                     </div>
                   </div>
@@ -179,53 +183,29 @@ export function CaseStudiesCarousel() {
             </div>
           )}
         </div>
+
       </div>
     </section>
   );
 }
 
-function FilterRow({
-  icon,
-  label,
-  options,
-  value,
-  onChange,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  options: readonly string[];
-  value: string | null;
-  onChange: (v: string | null) => void;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="flex items-center gap-1.5 pr-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-        {icon}
-        {label}
-      </span>
-      <Chip active={value === null} onClick={() => onChange(null)}>
-        All
-      </Chip>
-      {options.map((opt) => (
-        <Chip
-          key={opt}
-          active={value === opt}
-          onClick={() => onChange(value === opt ? null : opt)}
-        >
-          {opt}
-        </Chip>
-      ))}
-    </div>
-  );
-}
+const CAPABILITY_ICONS: Record<Capability, LucideIcon> = {
+  "Conversational AI":   MessageSquare,
+  "Predictive ML":       TrendingUp,
+  "Knowledge / RAG":     Database,
+  "Workflow Automation": GitBranch,
+  "IoT / Edge":          Cpu,
+};
 
-function Chip({
+function CapChip({
   active,
   onClick,
+  icon: Icon,
   children,
 }: {
   active: boolean;
   onClick: () => void;
+  icon?: LucideIcon;
   children: React.ReactNode;
 }) {
   return (
@@ -233,12 +213,13 @@ function Chip({
       type="button"
       onClick={onClick}
       className={
-        "rounded-full border px-3 py-1 text-xs font-medium transition-colors " +
+        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg border px-3 py-1 text-xs font-medium transition-all duration-150 " +
         (active
-          ? "border-primary/50 bg-primary/15 text-foreground"
-          : "border-border bg-surface text-muted-foreground hover:border-border/80 hover:text-foreground")
+          ? "border-primary/40 bg-primary/15 text-foreground"
+          : "border-transparent bg-transparent text-muted-foreground hover:border-border/60 hover:bg-surface hover:text-foreground")
       }
     >
+      {Icon && <Icon className="h-3 w-3 shrink-0" strokeWidth={1.75} />}
       {children}
     </button>
   );

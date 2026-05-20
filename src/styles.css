@@ -577,7 +577,37 @@
   animation: marquee 40s linear infinite;
 }
 
+/* === Timeline — Ken Burns cinematic zoom/pan === */
+@keyframes ken-burns-1 {
+  0%   { transform: scale(1.0) translate(0%,    0%);   }
+  100% { transform: scale(1.12) translate(-2%, -2%);   }
+}
+@keyframes ken-burns-2 {
+  0%   { transform: scale(1.08) translate(2%,   1%);   }
+  100% { transform: scale(1.0)  translate(-1%, -2%);   }
+}
+@keyframes ken-burns-3 {
+  0%   { transform: scale(1.0)  translate(-1%,  2%);   }
+  100% { transform: scale(1.11) translate(2%,  -1%);   }
+}
+
+.timeline-img-1 {
+  animation: ken-burns-1 14s ease-in-out infinite alternate;
+}
+.timeline-img-2 {
+  animation: ken-burns-2 16s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+.timeline-img-3 {
+  animation: ken-burns-3 13s ease-in-out infinite alternate;
+  animation-delay: -9s;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .timeline-img-1,
+  .timeline-img-2,
+  .timeline-img-3,
+
   .animate-float-orb,
   .animate-float-orb-alt,
   .animate-grid-scan,

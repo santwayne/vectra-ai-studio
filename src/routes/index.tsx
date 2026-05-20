@@ -40,14 +40,11 @@ import timelineDeploymentAvif768 from "@/assets/timeline-deployment-768.avif";
 import timelineDeploymentWebp from "@/assets/timeline-deployment.webp";
 import timelineDeploymentWebp480 from "@/assets/timeline-deployment-480.webp";
 import timelineDeploymentWebp768 from "@/assets/timeline-deployment-768.webp";
-import { ArrowRight, Shield, Zap, Target, Users, Sparkles } from "lucide-react";
-import fortuneImg from "@/assets/images/hero-section/fortune-500-insurer.jpeg";
-import logisticsImg from "@/assets/images/hero-section/global-logistics.png";
-import healthImg from "@/assets/images/hero-section/top-10-us-health-system.png";
-import fintechImg from "@/assets/images/hero-section/public-fintech.png";
-import euImg from "@/assets/images/hero-section/eu-industrial-group.png";
-import saasImg from "@/assets/images/hero-section/series-c-saas.png";
-import strategyDiscoveryImg from "@/assets/images/strategy/discovery.png";
+import { ArrowRight, Landmark, Gauge, Activity, Handshake, Sparkles } from "lucide-react";
+import strategyDiscoveryImg from "@/assets/images/strategy/Discovery.png";
+import strategyPilotImg from "@/assets/images/strategy/Pilot.png";
+import strategyDeploymentImg from "@/assets/images/strategy/Deployment.png";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,10 +67,10 @@ export const Route = createFileRoute("/")({
 });
 
 const reasons = [
-  { icon: Shield, title: "Enterprise-grade", desc: "SOC 2, SSO/SAML, audit logs, VPC and on-prem deployment options." },
-  { icon: Zap, title: "Production in weeks", desc: "Pilots ship in 4–6 weeks against a measurable baseline. No demoware." },
-  { icon: Target, title: "ROI-accountable", desc: "Every system is tied to operational and financial KPIs you already track." },
-  { icon: Users, title: "Augments your team", desc: "Designed around your process, your data, and your domain experts." },
+  { icon: Landmark,    title: "Enterprise-grade",    desc: "SOC 2, SSO/SAML, audit logs, VPC and on-prem deployment options." },
+  { icon: Gauge,       title: "Production in weeks", desc: "Pilots ship in 4–6 weeks against a measurable baseline. No demoware." },
+  { icon: Activity,    title: "ROI-accountable",     desc: "Every system is tied to operational and financial KPIs you already track." },
+  { icon: Handshake,   title: "Augments your team",  desc: "Designed around your process, your data, and your domain experts." },
 ];
 
 function HomePage() {
@@ -230,6 +227,7 @@ function HomePage() {
                 label: "Pilot",
                 time: "Week 3–6",
                 desc: "Production-grade pilot against one workflow with real users and real data.",
+                singleImg: strategyPilotImg,
                 img: timelinePilot,
                 img480: timelinePilot480,
                 img768: timelinePilot768,
@@ -246,6 +244,7 @@ function HomePage() {
                 label: "Deployment",
                 time: "Week 7–12",
                 desc: "Hardened rollout with SSO, audit logs, observability, and ongoing operation.",
+                singleImg: strategyDeploymentImg,
                 img: timelineDeployment,
                 img480: timelineDeployment480,
                 img768: timelineDeployment768,
@@ -269,7 +268,7 @@ function HomePage() {
                       alt={p.alt}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      className={`h-full w-full object-cover timeline-img-${i + 1}`}
                     />
                   ) : (
                     <picture>
@@ -292,10 +291,13 @@ function HomePage() {
                         height={640}
                         loading="lazy"
                         decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                        className={`h-full w-full object-cover timeline-img-${i + 1}`}
                       />
                     </picture>
                   )}
+                  {/* shine sweep on hover */}
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                  {/* bottom fade */}
                   <div
                     className="pointer-events-none absolute inset-0"
                     style={{
@@ -357,8 +359,10 @@ function HomePage() {
                   key={r.title}
                   className={`glass-card glow-card hover-lift reveal reveal-delay-${(i % 4) + 1} p-6`}
                 >
-                  <r.icon className="h-5 w-5 text-primary" />
-                  <h3 className="mt-4 text-base font-semibold">{r.title}</h3>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20 transition-colors duration-300 group-hover:bg-primary/20">
+                    <r.icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
+                  </div>
+                  <h3 className="mt-5 text-base font-semibold">{r.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{r.desc}</p>
                 </div>
               ))}

@@ -3,6 +3,14 @@ import { SiteShell } from "@/components/SiteShell";
 import { PageHero } from "@/components/PageHero";
 import { ArrowLeft, ArrowRight, Download } from "lucide-react";
 import { caseStudies, getCaseStudyBySlug, type CaseStudy } from "@/data/caseStudies";
+import caseStudyHeroImg from "@/assets/images/case-study/agentic-ai.png";
+import rouseNavigatorImg from "@/assets/images/case-study/Rouse Navigator.png";
+import fintechRiskImg from "@/assets/images/case-study/FinTech Risk Analyzer.png";
+
+const caseStudyImages: Record<string, string> = {
+  "rouse-navigator": rouseNavigatorImg,
+  "fintech-risk-analyzer": fintechRiskImg,
+};
 
 export const Route = createFileRoute("/case-studies_/$slug")({
   loader: ({ params }): CaseStudy => {
@@ -169,7 +177,7 @@ function CaseStudyDetailPage() {
 
   return (
     <SiteShell>
-      <PageHero eyebrow={study.industry} title={study.name} description={study.tagline}>
+      <PageHero eyebrow={study.industry} title={study.name} description={study.tagline} image={caseStudyImages[study.slug] ?? caseStudyHeroImg} imageAlt={study.name}>
         <div className="flex flex-wrap gap-3">
           <button onClick={() => downloadSummary(study)} className="btn-primary">
             <Download className="h-4 w-4" /> Download PDF summary

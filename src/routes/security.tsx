@@ -105,7 +105,7 @@ function SecurityPage() {
         </div>
       </section>
 
-      <section id="certifications" className="section border-t border-border">
+      {/* <section id="certifications" className="section border-t border-border">
         <div className="container-wide">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
@@ -155,7 +155,7 @@ function SecurityPage() {
             </table>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="section">
         <div className="container-wide grid gap-12 lg:grid-cols-2">
@@ -181,6 +181,9 @@ function SecurityPage() {
           </ul>
         </div>
       </section>
+
+
+      
 
       <section className="section border-t border-border">
         <div className="container-wide">

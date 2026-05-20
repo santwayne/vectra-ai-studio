@@ -2,7 +2,6 @@ import type { CaseStudy } from "@/data/caseStudies";
 
 export const ALL_CAPABILITIES = [
   "Conversational AI",
-  "Computer Vision",
   "Predictive ML",
   "Knowledge / RAG",
   "Workflow Automation",
@@ -13,7 +12,6 @@ export type Capability = (typeof ALL_CAPABILITIES)[number];
 
 const STACK_BUCKETS: Record<Capability, RegExp> = {
   "Conversational AI": /(voice|whisper|stt|tts|chat|conversational|nlu|dialog)/i,
-  "Computer Vision": /(vision|opencv|yolo|tensorflow|cnn|image|ocr|video|ar |arcore|arkit)/i,
   "Predictive ML": /(predict|forecast|model|ml |scikit|xgboost|risk|anomaly|score)/i,
   "Knowledge / RAG": /(rag|pgvector|vector|embed|retrieval|knowledge|search|llamaindex)/i,
   "Workflow Automation": /(workflow|automation|agent|n8n|zapier|orchestrat|pipeline)/i,
