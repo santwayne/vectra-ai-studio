@@ -67,8 +67,8 @@ export function Footer() {
             </div>
             <div>
               <p className="font-semibold text-foreground">Headquarters</p>
-              <p className="mt-1">548 Market Street, Suite 35410</p>
-              <p>San Francisco, CA 94104, USA</p>
+              <p className="mt-1">290 King St E, Kitchener, ON N2G 2L3</p>
+              <p>Serving Kitchener & Ontario</p>
             </div>
             <div>
               <p className="font-semibold text-foreground">Compliance</p>

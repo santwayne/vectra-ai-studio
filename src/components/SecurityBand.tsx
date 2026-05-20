@@ -1,13 +1,13 @@
-import { Shield, Lock, FileCheck, Server, KeyRound, ScrollText } from "lucide-react";
+import { Shield, ShieldCheck, Scale, Fingerprint, LockKeyhole, Building2, ListChecks } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 const items = [
-  { icon: Shield, title: "SOC 2 Type II", desc: "Audited controls across security, availability, and confidentiality." },
-  { icon: FileCheck, title: "GDPR & DPA", desc: "EU data residency options and signed Data Processing Agreements." },
-  { icon: KeyRound, title: "SSO / SAML", desc: "Okta, Azure AD, Google Workspace. SCIM provisioning available." },
-  { icon: Lock, title: "Encryption", desc: "AES-256 at rest, TLS 1.3 in transit. Customer-managed keys on request." },
-  { icon: Server, title: "Private deployment", desc: "VPC, single-tenant, or on-prem deployment for regulated workloads." },
-  { icon: ScrollText, title: "Audit logs", desc: "Full request, prompt, and tool-call traces. Exportable to your SIEM." },
+  { icon: ShieldCheck, title: "SOC 2 Type II", desc: "Audited controls across security, availability, and confidentiality." },
+  { icon: Scale, title: "GDPR & DPA", desc: "EU data residency options and signed Data Processing Agreements." },
+  { icon: Fingerprint, title: "SSO / SAML", desc: "Okta, Azure AD, Google Workspace. SCIM provisioning available." },
+  { icon: LockKeyhole, title: "Encryption", desc: "AES-256 at rest, TLS 1.3 in transit. Customer-managed keys on request." },
+  { icon: Building2, title: "Private deployment", desc: "VPC, single-tenant, or on-prem deployment for regulated workloads." },
+  { icon: ListChecks, title: "Audit logs", desc: "Full request, prompt, and tool-call traces. Exportable to your SIEM." },
 ];
 
 export function SecurityBand() {
