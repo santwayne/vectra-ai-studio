@@ -4,6 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes hero-drop-in {
+  0%   { opacity: 0;   transform: translateY(-220px) scale(0.88); }
+  55%  { opacity: 1;   transform: translateY(14px)   scale(1.03); }
+  72%  {               transform: translateY(-8px)   scale(0.99); }
+  86%  {               transform: translateY(4px)    scale(1.0);  }
+  100% { opacity: 1;   transform: translateY(0)      scale(1);    }
+}
+@keyframes hero-float-a {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-11px); }
+}
+@keyframes hero-float-b {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-8px) rotate(3deg); }
+}
+@keyframes hero-float-c {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-9px) rotate(-3deg); }
+}
+@keyframes hero-float-d {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-6px); }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

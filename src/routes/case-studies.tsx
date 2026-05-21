@@ -10,6 +10,27 @@ import {
   type SanityCaseStudy,
 } from "@/lib/sanity";
 import { caseStudies as fallbackCases } from "@/data/caseStudies";
+import rouseNavigatorImg    from "@/assets/images/case-study/images/Rouse Navigator.jpg.jpeg";
+import fintechImg           from "@/assets/images/case-study/images/FinTech Risk Analyzer.jpg.jpeg";
+import healthClinicImg      from "@/assets/images/case-study/images/Health Clinic AI Assistant.jpg.jpeg";
+import logisticsImg         from "@/assets/images/case-study/images/Logistics Ops Dashboard.jpg.jpeg";
+import stridePulseImg       from "@/assets/images/case-study/images/StridePulse.jpg.jpeg";
+import vitalSyncImg         from "@/assets/images/case-study/images/VitalSync IoT.jpg.jpeg";
+import fairwayIQImg         from "@/assets/images/case-study/images/FairwayIQ.jpg.jpeg";
+import linguaBridgeImg      from "@/assets/images/case-study/images/LinguaBridge.jpg.jpeg";
+import kindCubeImg          from "@/assets/images/case-study/images/KindCube.jpg.jpeg";
+
+const caseCardImages: Record<string, string> = {
+  "rouse-navigator":          rouseNavigatorImg,
+  "fintech-risk-analyzer":    fintechImg,
+  "health-clinic-ai-assistant": healthClinicImg,
+  "logistics-ops-dashboard":  logisticsImg,
+  "stridepulse":              stridePulseImg,
+  "vitalsync-iot":            vitalSyncImg,
+  "fairwayiq":                fairwayIQImg,
+  "linguabridge":             linguaBridgeImg,
+  "kindcube":                 kindCubeImg,
+};
 
 export const Route = createFileRoute("/case-studies")({
   head: () => ({
@@ -227,8 +248,20 @@ function CaseStudiesPage() {
                 key={c.slug}
                 to="/case-studies/$slug"
                 params={{ slug: c.slug }}
-                className="group flex flex-col rounded-2xl border border-border bg-surface/60 p-6 transition-colors hover:border-primary/40"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface/60 transition-colors hover:border-primary/40"
               >
+                {/* card image */}
+                {caseCardImages[c.slug] && (
+                  <div className="h-44 w-full overflow-hidden">
+                    <img
+                      src={caseCardImages[c.slug]}
+                      alt={c.name}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+
+                <div className="flex flex-1 flex-col p-6">
                 <div className="flex items-center justify-between">
                   <span className="rounded-full border border-border bg-background/60 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                     {c.industry}
@@ -276,6 +309,7 @@ function CaseStudiesPage() {
                     Read story
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                   </span>
+                </div>
                 </div>
               </Link>
             ))}

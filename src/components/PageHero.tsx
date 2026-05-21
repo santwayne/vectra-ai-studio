@@ -7,6 +7,8 @@ export function PageHero({
   children,
   image,
   imageAlt,
+  video,
+  graphic,
 }: {
   eyebrow?: string;
   title: string;
@@ -14,7 +16,11 @@ export function PageHero({
   children?: ReactNode;
   image?: string;
   imageAlt?: string;
+  video?: string;
+  graphic?: ReactNode;
 }) {
+  const hasMedia = !!(video ?? image ?? graphic);
+
   return (
     <section className="relative overflow-hidden border-b border-border">
       <div className="absolute inset-0 grid-bg opacity-60" aria-hidden />
@@ -24,7 +30,7 @@ export function PageHero({
         aria-hidden
       />
       <div className="container-wide relative pb-20 pt-28 md:pb-28 md:pt-36">
-        <div className={image ? "grid items-center gap-12 lg:grid-cols-[1fr_auto]" : undefined}>
+        <div className={hasMedia ? "grid items-center gap-12 lg:grid-cols-[1fr_auto]" : undefined}>
           {/* left: text content */}
           <div>
             {eyebrow && <span className="eyebrow">{eyebrow}</span>}
@@ -39,17 +45,32 @@ export function PageHero({
             {children && <div className="mt-8">{children}</div>}
           </div>
 
-          {/* right: optional image */}
-          {image && (
+          {/* right: graphic / video / image */}
+          {hasMedia && (
             <div className="hidden lg:flex lg:items-center lg:justify-end lg:-translate-x-16">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-2xl bg-primary/10 blur-3xl" />
-                <img
-                  src={image}
-                  alt={imageAlt ?? title}
-                  className="relative h-96 w-96 object-contain drop-shadow-[0_0_40px_rgba(99,179,237,0.2)]"
-                />
-              </div>
+              {graphic ? (
+                graphic
+              ) : (
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-2xl bg-primary/10 blur-3xl" />
+                  {video ? (
+                    <video
+                      src={video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="relative h-96 w-96 rounded-2xl object-contain drop-shadow-[0_0_40px_rgba(99,179,237,0.2)]"
+                    />
+                  ) : (
+                    <img
+                      src={image}
+                      alt={imageAlt ?? title}
+                      className="relative h-96 w-96 object-contain drop-shadow-[0_0_40px_rgba(99,179,237,0.2)]"
+                    />
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

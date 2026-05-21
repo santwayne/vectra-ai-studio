@@ -1,11 +1,32 @@
 import industrialImg from "@/assets/images/hero-section/case-study/industrial.png";
 import fintechImg from "@/assets/images/hero-section/case-study/fintech-lending.png";
 import healthtechImg from "@/assets/images/hero-section/case-study/healthtech.png";
+import rouseImg       from "@/assets/images/case-study/images/Rouse Navigator.jpg.jpeg";
+import fintechCardImg from "@/assets/images/case-study/images/FinTech Risk Analyzer.jpg.jpeg";
+import healthCardImg  from "@/assets/images/case-study/images/Health Clinic AI Assistant.jpg.jpeg";
+import logisticsImg   from "@/assets/images/case-study/images/Logistics Ops Dashboard.jpg.jpeg";
+import stridePulseImg from "@/assets/images/case-study/images/StridePulse.jpg.jpeg";
+import vitalSyncImg   from "@/assets/images/case-study/images/VitalSync IoT.jpg.jpeg";
+import fairwayIQImg    from "@/assets/images/case-study/images/FairwayIQ.jpg.jpeg";
+import linguaBridgeImg from "@/assets/images/case-study/images/LinguaBridge.jpg.jpeg";
+import kindCubeImg    from "@/assets/images/case-study/images/KindCube.jpg.jpeg";
 
 export const INDUSTRY_IMAGES: Record<string, string> = {
   Industrial: industrialImg,
   "FinTech / Lending": fintechImg,
   HealthTech: healthtechImg,
+};
+
+const SLUG_IMAGES: Record<string, string> = {
+  "rouse-navigator":            rouseImg,
+  "fintech-risk-analyzer":      fintechCardImg,
+  "health-clinic-ai-assistant": healthCardImg,
+  "logistics-ops-dashboard":    logisticsImg,
+  "stridepulse":                stridePulseImg,
+  "vitalsync-iot":              vitalSyncImg,
+  "fairwayiq":                  fairwayIQImg,
+  "linguabridge":               linguaBridgeImg,
+  "kindcube":                   kindCubeImg,
 };
 
 /**
@@ -36,7 +57,7 @@ function seed(s: string) {
 }
 
 export function CaseStudyArt({ industry, slug, className }: Props) {
-  const coverImg = INDUSTRY_IMAGES[industry];
+  const coverImg = SLUG_IMAGES[slug] ?? INDUSTRY_IMAGES[industry];
 
   if (coverImg) {
     return (

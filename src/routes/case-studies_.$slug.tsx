@@ -3,13 +3,26 @@ import { SiteShell } from "@/components/SiteShell";
 import { PageHero } from "@/components/PageHero";
 import { ArrowLeft, ArrowRight, Download } from "lucide-react";
 import { caseStudies, getCaseStudyBySlug, type CaseStudy } from "@/data/caseStudies";
+import { HeroMotionGraphic } from "@/components/HeroMotionGraphic";
 import caseStudyHeroImg from "@/assets/images/case-study/agentic-ai.png";
 import rouseNavigatorImg from "@/assets/images/case-study/Rouse Navigator.png";
 import fintechRiskImg from "@/assets/images/case-study/FinTech Risk Analyzer.png";
+import rouseVideo from "@/assets/images/case-study/video/rouse navigator.webm";
+import fintechVideo from "@/assets/images/case-study/video/fintech.mp4";
 
 const caseStudyImages: Record<string, string> = {
   "rouse-navigator": rouseNavigatorImg,
   "fintech-risk-analyzer": fintechRiskImg,
+};
+
+const caseStudyVideos: Record<string, string[]> = {
+  "rouse-navigator": [rouseVideo],
+  "fintech-risk-analyzer": [fintechVideo],
+};
+
+const caseStudyHeroVideo: Record<string, string> = {
+  "rouse-navigator": rouseVideo,
+  "fintech-risk-analyzer": fintechVideo,
 };
 
 export const Route = createFileRoute("/case-studies_/$slug")({
@@ -174,10 +187,18 @@ async function downloadSummary(study: CaseStudy) {
 function CaseStudyDetailPage() {
   const study = Route.useLoaderData() as CaseStudy;
   const others = caseStudies.filter((c) => c.slug !== study.slug).slice(0, 3);
+  const videos = caseStudyVideos[study.slug] ?? [];
 
   return (
     <SiteShell>
-      <PageHero eyebrow={study.industry} title={study.name} description={study.tagline} image={caseStudyImages[study.slug] ?? caseStudyHeroImg} imageAlt={study.name}>
+      <PageHero
+        eyebrow={study.industry}
+        title={study.name}
+        description={study.tagline}
+        video={caseStudyHeroVideo[study.slug]}
+        graphic={caseStudyHeroVideo[study.slug] ? undefined : <HeroMotionGraphic />}
+        imageAlt={study.name}
+      >
         <div className="flex flex-wrap gap-3">
           <button onClick={() => downloadSummary(study)} className="btn-primary">
             <Download className="h-4 w-4" /> Download PDF summary
@@ -247,6 +268,22 @@ function CaseStudyDetailPage() {
           </aside>
 
           <article className="space-y-10 lg:col-span-2">
+            {videos.length > 0 && (
+              <div className={`grid gap-4 ${videos.length >= 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
+                {videos.map((src, i) => (
+                  <video
+                    key={i}
+                    src={src}
+                    controls
+                    muted
+                    playsInline
+                    className="w-full rounded-xl border border-border bg-black"
+                    style={{ maxHeight: "280px", objectFit: "contain" }}
+                  />
+                ))}
+              </div>
+            )}
+
             <div>
               <h2 className="text-xs uppercase tracking-widest text-muted-foreground">
                 Problem
