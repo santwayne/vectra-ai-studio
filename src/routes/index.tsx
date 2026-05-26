@@ -41,7 +41,7 @@ import timelineDeploymentWebp from "@/assets/timeline-deployment.webp";
 import timelineDeploymentWebp480 from "@/assets/timeline-deployment-480.webp";
 import timelineDeploymentWebp768 from "@/assets/timeline-deployment-768.webp";
 import { ArrowRight, Landmark, Gauge, Activity, Handshake, Sparkles } from "lucide-react";
-import strategyDiscoveryImg from "@/assets/images/strategy/Discovery.png";
+import strategyDiscoveryImg from "@/assets/images/strategy/Discovery.jpeg";
 import strategyPilotImg from "@/assets/images/strategy/Pilot.png";
 import strategyDeploymentImg from "@/assets/images/strategy/Deployment.png";
 
