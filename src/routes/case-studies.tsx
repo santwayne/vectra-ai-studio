@@ -10,8 +10,8 @@ import {
   type SanityCaseStudy,
 } from "@/lib/sanity";
 import { caseStudies as fallbackCases } from "@/data/caseStudies";
-import rouseNavigatorImg    from "@/assets/images/case-study/images/Rouse Navigator.jpg.jpeg";
-import fintechImg           from "@/assets/images/case-study/images/FinTech Risk Analyzer.jpg.jpeg";
+import rouseNavigatorImg    from "@/assets/images/case-study/images/Rouse Navigator.jpg.png";
+import fintechImg           from "@/assets/images/case-study/images/FinTech Risk Analyzer.jpg.png";
 import healthClinicImg      from "@/assets/images/case-study/images/Health Clinic AI Assistant.jpg.jpeg";
 import logisticsImg         from "@/assets/images/case-study/images/Logistics Ops Dashboard.jpg.jpeg";
 import stridePulseImg       from "@/assets/images/case-study/images/StridePulse.jpg.jpeg";
