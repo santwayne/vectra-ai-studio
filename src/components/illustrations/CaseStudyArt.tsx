@@ -2,7 +2,7 @@ import industrialImg from "@/assets/images/hero-section/case-study/industrial.pn
 import fintechImg from "@/assets/images/hero-section/case-study/fintech-lending.png";
 import healthtechImg from "@/assets/images/hero-section/case-study/healthtech.png";
 import rouseImg       from "@/assets/images/case-study/images/Rouse Navigator.jpg.png";
-import fintechCardImg from "@/assets/images/case-study/images/FinTech Risk Analyzer.jpg.png";
+import fintechCardImg from "@/assets/images/case-study/images/FinTech Risk Analyzer.jpg.jpeg";
 import healthCardImg  from "@/assets/images/case-study/images/Health Clinic AI Assistant.jpg.jpeg";
 import logisticsImg   from "@/assets/images/case-study/images/Logistics Ops Dashboard.jpg.jpeg";
 import stridePulseImg from "@/assets/images/case-study/images/StridePulse.jpg.jpeg";
