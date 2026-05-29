@@ -1,15 +1,19 @@
-import industrialImg from "@/assets/images/hero-section/case-study/industrial.png";
-import fintechImg from "@/assets/images/hero-section/case-study/fintech-lending.png";
-import healthtechImg from "@/assets/images/hero-section/case-study/healthtech.png";
-import rouseImg       from "@/assets/images/case-study/images/Rouse Navigator.jpg.png";
-import fintechCardImg from "@/assets/images/case-study/images/FinTech Risk Analyzer.png";
-import healthCardImg  from "@/assets/images/case-study/images/Health Clinic AI Assistant.jpg.jpeg";
-import logisticsImg   from "@/assets/images/case-study/images/Logistics Ops Dashboard.jpg.jpeg";
-import stridePulseImg from "@/assets/images/case-study/images/StridePulse.jpg.jpeg";
-import vitalSyncImg   from "@/assets/images/case-study/images/VitalSync IoT.jpg.jpeg";
-import fairwayIQImg    from "@/assets/images/case-study/images/FairwayIQ.jpg.jpeg";
-import linguaBridgeImg from "@/assets/images/case-study/images/LinguaBridge.jpg.jpeg";
-import kindCubeImg    from "@/assets/images/case-study/images/KindCube.jpg.jpeg";
+import industrialImg   from "@/assets/images/hero-section/case-study/industrial.png";
+import fintechImg      from "@/assets/images/hero-section/case-study/fintech-lending.png";
+import healthtechImg   from "@/assets/images/hero-section/case-study/healthtech.png";
+import rouseImg        from "@/assets/images/case-study/images/Rouse Navigator.jpg.png";
+import fintechCardImg  from "@/assets/images/case-study/images/FinTech Risk Analyzer.png";
+import healthCardImg   from "@/assets/images/case-study/images/Health Clinic AI Assistant.png";
+import logisticsImg    from "@/assets/images/case-study/images/Logistics Ops Dashboard.png";
+import stridePulseImg  from "@/assets/images/case-study/images/StridePulse.png";
+import vitalSyncImg    from "@/assets/images/case-study/images/VitalSync IoT.png";
+import fairwayIQImg    from "@/assets/images/case-study/images/FairwayIQ.png";
+import linguaBridgeImg from "@/assets/images/case-study/images/LinguaBridge.png";
+import kindCubeImg     from "@/assets/images/case-study/images/KindCube .png";
+import gaitSenseImg    from "@/assets/images/case-study/images/GaitSense.png";
+import styleMuseImg    from "@/assets/images/case-study/images/StyleMuse AI.png";
+import aromaSenseImg   from "@/assets/images/case-study/images/AromaSense.png";
+import parkGuardImg    from "@/assets/images/case-study/images/ParkGuard.png";
 
 export const INDUSTRY_IMAGES: Record<string, string> = {
   Industrial: industrialImg,
@@ -27,6 +31,10 @@ const SLUG_IMAGES: Record<string, string> = {
   "fairwayiq":                  fairwayIQImg,
   "linguabridge":               linguaBridgeImg,
   "kindcube":                   kindCubeImg,
+  "gaitsense":                  gaitSenseImg,
+  "stylemuse-ai":               styleMuseImg,
+  "aromasense":                 aromaSenseImg,
+  "parkguard":                  parkGuardImg,
 };
 
 /**

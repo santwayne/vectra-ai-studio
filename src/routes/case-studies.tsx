@@ -12,24 +12,32 @@ import {
 import { caseStudies as fallbackCases } from "@/data/caseStudies";
 import rouseNavigatorImg    from "@/assets/images/case-study/images/Rouse Navigator.jpg.png";
 import fintechImg           from "@/assets/images/case-study/images/FinTech Risk Analyzer.png";
-import healthClinicImg      from "@/assets/images/case-study/images/Health Clinic AI Assistant.jpg.jpeg";
-import logisticsImg         from "@/assets/images/case-study/images/Logistics Ops Dashboard.jpg.jpeg";
-import stridePulseImg       from "@/assets/images/case-study/images/StridePulse.jpg.jpeg";
-import vitalSyncImg         from "@/assets/images/case-study/images/VitalSync IoT.jpg.jpeg";
-import fairwayIQImg         from "@/assets/images/case-study/images/FairwayIQ.jpg.jpeg";
-import linguaBridgeImg      from "@/assets/images/case-study/images/LinguaBridge.jpg.jpeg";
-import kindCubeImg          from "@/assets/images/case-study/images/KindCube.jpg.jpeg";
+import healthClinicImg      from "@/assets/images/case-study/images/Health Clinic AI Assistant.png";
+import logisticsImg         from "@/assets/images/case-study/images/Logistics Ops Dashboard.png";
+import stridePulseImg       from "@/assets/images/case-study/images/StridePulse.png";
+import vitalSyncImg         from "@/assets/images/case-study/images/VitalSync IoT.png";
+import fairwayIQImg         from "@/assets/images/case-study/images/FairwayIQ.png";
+import linguaBridgeImg      from "@/assets/images/case-study/images/LinguaBridge.png";
+import kindCubeImg          from "@/assets/images/case-study/images/KindCube .png";
+import gaitSenseImg         from "@/assets/images/case-study/images/GaitSense.png";
+import styleMuseImg         from "@/assets/images/case-study/images/StyleMuse AI.png";
+import aromaSenseImg        from "@/assets/images/case-study/images/AromaSense.png";
+import parkGuardImg         from "@/assets/images/case-study/images/ParkGuard.png";
 
 const caseCardImages: Record<string, string> = {
-  "rouse-navigator":          rouseNavigatorImg,
-  "fintech-risk-analyzer":    fintechImg,
+  "rouse-navigator":            rouseNavigatorImg,
+  "fintech-risk-analyzer":      fintechImg,
   "health-clinic-ai-assistant": healthClinicImg,
-  "logistics-ops-dashboard":  logisticsImg,
-  "stridepulse":              stridePulseImg,
-  "vitalsync-iot":            vitalSyncImg,
-  "fairwayiq":                fairwayIQImg,
-  "linguabridge":             linguaBridgeImg,
-  "kindcube":                 kindCubeImg,
+  "logistics-ops-dashboard":    logisticsImg,
+  "stridepulse":                stridePulseImg,
+  "vitalsync-iot":              vitalSyncImg,
+  "fairwayiq":                  fairwayIQImg,
+  "linguabridge":               linguaBridgeImg,
+  "kindcube":                   kindCubeImg,
+  "gaitsense":                  gaitSenseImg,
+  "stylemuse-ai":               styleMuseImg,
+  "aromasense":                 aromaSenseImg,
+  "parkguard":                  parkGuardImg,
 };
 
 export const Route = createFileRoute("/case-studies")({
@@ -256,7 +264,7 @@ function CaseStudiesPage() {
                     <img
                       src={caseCardImages[c.slug]}
                       alt={c.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 )}

@@ -268,21 +268,6 @@ function CaseStudyDetailPage() {
           </aside>
 
           <article className="space-y-10 lg:col-span-2">
-            {videos.length > 0 && (
-              <div className={`grid gap-4 ${videos.length >= 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
-                {videos.map((src, i) => (
-                  <video
-                    key={i}
-                    src={src}
-                    controls
-                    muted
-                    playsInline
-                    className="w-full rounded-xl border border-border bg-black"
-                    style={{ maxHeight: "280px", objectFit: "contain" }}
-                  />
-                ))}
-              </div>
-            )}
 
             <div>
               <h2 className="text-xs uppercase tracking-widest text-muted-foreground">
