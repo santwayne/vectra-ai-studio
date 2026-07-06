@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { SiteShell } from "@/components/SiteShell";
 import { PageHero } from "@/components/PageHero";
 import {
@@ -168,6 +169,61 @@ const faqs = [
 
 function PilotPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    company: "",
+    companySize: "",
+    region: "",
+    workflow: "",
+    kpi: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError(null);
+
+    const templateParams = {
+      title: "New Pilot Scoping Request",
+      time: new Date().toLocaleString(),
+      ...formData,
+      message: `
+Email: ${formData.email}
+Company: ${formData.company}
+Company Size: ${formData.companySize}
+Region: ${formData.region}
+
+Workflow to pilot:
+${formData.workflow}
+
+Target KPI:
+${formData.kpi}
+      `.trim(),
+    };
+
+    try {
+      await emailjs.send(
+        "service_gpkmole",
+        "template_7xnt2qj",
+        templateParams,
+        "bBMebUMYk1P4zsdvp"
+      );
+      setSubmitted(true);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError("Failed to send your request. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <SiteShell>
@@ -298,18 +354,18 @@ function PilotPage() {
               {!submitted ? (
                 <form
                   className="mt-6 space-y-4"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSubmitted(true);
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <div className="grid gap-3 sm:grid-cols-2">
                     <label className="block text-xs">
                       <span className="text-muted-foreground">Work email</span>
                       <input
                         type="email"
+                        name="email"
                         required
                         placeholder="you@company.com"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                       />
                     </label>
@@ -317,8 +373,11 @@ function PilotPage() {
                       <span className="text-muted-foreground">Company</span>
                       <input
                         type="text"
+                        name="company"
                         required
                         placeholder="Acme Inc."
+                        value={formData.company}
+                        onChange={handleChange}
                         className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                       />
                     </label>
@@ -327,33 +386,37 @@ function PilotPage() {
                     <label className="block text-xs">
                       <span className="text-muted-foreground">Company size</span>
                       <select
+                        name="companySize"
                         required
-                        defaultValue=""
+                        value={formData.companySize}
+                        onChange={handleChange}
                         className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none"
                       >
                         <option value="" disabled>
                           Select
                         </option>
-                        <option>200 – 1,000</option>
-                        <option>1,000 – 5,000</option>
-                        <option>5,000 – 25,000</option>
-                        <option>25,000+</option>
+                        <option value="200 – 1,000">200 – 1,000</option>
+                        <option value="1,000 – 5,000">1,000 – 5,000</option>
+                        <option value="5,000 – 25,000">5,000 – 25,000</option>
+                        <option value="25,000+">25,000+</option>
                       </select>
                     </label>
                     <label className="block text-xs">
                       <span className="text-muted-foreground">Region</span>
                       <select
+                        name="region"
                         required
-                        defaultValue=""
+                        value={formData.region}
+                        onChange={handleChange}
                         className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none"
                       >
                         <option value="" disabled>
                           Select
                         </option>
-                        <option>North America</option>
-                        <option>EU / UK</option>
-                        <option>APAC</option>
-                        <option>Other / Multi-region</option>
+                        <option value="North America">North America</option>
+                        <option value="EU / UK">EU / UK</option>
+                        <option value="APAC">APAC</option>
+                        <option value="Other / Multi-region">Other / Multi-region</option>
                       </select>
                     </label>
                   </div>
@@ -362,9 +425,12 @@ function PilotPage() {
                       Workflow you'd pilot (1–2 sentences)
                     </span>
                     <textarea
+                      name="workflow"
                       rows={3}
                       required
                       placeholder="e.g. Triage inbound RFPs, draft first-pass response, route to sales engineer. ~1,200 RFPs / quarter."
+                      value={formData.workflow}
+                      onChange={handleChange}
                       className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                     />
                   </label>
@@ -372,13 +438,19 @@ function PilotPage() {
                     <span className="text-muted-foreground">Target KPI to move</span>
                     <input
                       type="text"
+                      name="kpi"
                       required
                       placeholder="e.g. cycle time, win rate, deflection %"
+                      value={formData.kpi}
+                      onChange={handleChange}
                       className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                     />
                   </label>
-                  <button type="submit" className="btn-primary w-full">
-                    Request pilot scoping <ArrowRight className="h-4 w-4" />
+                  {error && (
+                    <p className="text-xs text-red-500">{error}</p>
+                  )}
+                  <button type="submit" disabled={sending} className="btn-primary w-full disabled:opacity-60">
+                    {sending ? "Sending…" : <><span>Request pilot scoping</span> <ArrowRight className="h-4 w-4" /></>}
                   </button>
                   <p className="text-[10px] text-muted-foreground">
                     By submitting, you agree to our{" "}

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import emailjs from "@emailjs/browser";
 import { SiteShell } from "@/components/SiteShell";
 import { PageHero } from "@/components/PageHero";
 import { Mail, MapPin, MessageSquare, CheckCircle2 } from "lucide-react";
@@ -26,6 +27,58 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    topic: "New engagement",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError(null);
+
+    const templateParams = {
+      title: "New Contact Form Submission",
+      time: new Date().toLocaleString(),
+      ...formData,
+      message: `
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company || "Not provided"}
+Inquiry Type: ${formData.topic}
+
+Message:
+${formData.message}
+      `.trim(),
+    };
+
+    try {
+      await emailjs.send(
+        "service_gpkmole",
+        "template_7xnt2qj",
+        templateParams,
+        "bBMebUMYk1P4zsdvp"
+      );
+      setSubmitted(true);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError("Failed to send your message. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <SiteShell>
       <PageHero
@@ -77,30 +130,47 @@ function ContactPage() {
               ) : (
                 <form
                   className="space-y-5"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSubmitted(true);
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <h2 className="text-2xl font-semibold tracking-tight">
                     Send a message
                   </h2>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <CField label="Full name" name="name" required />
-                    <CField label="Work email" name="email" type="email" required />
-                    <CField label="Company" name="company" />
+                    <CField
+                      label="Full name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                    <CField
+                      label="Work email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    <CField
+                      label="Company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                    />
                     <div>
                       <label className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                         Inquiry type
                       </label>
                       <select
                         name="topic"
+                        value={formData.topic}
+                        onChange={handleChange}
                         className="mt-2 w-full rounded-xl border border-input bg-surface px-4 py-3 text-sm outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary"
                       >
-                        <option>New engagement</option>
-                        <option>Partnership</option>
-                        <option>Press</option>
-                        <option>Careers</option>
+                        <option value="New engagement">New engagement</option>
+                        <option value="Partnership">Partnership</option>
+                        <option value="Press">Press</option>
+                        <option value="Careers">Careers</option>
                       </select>
                     </div>
                   </div>
@@ -111,11 +181,16 @@ function ContactPage() {
                     <textarea
                       name="message"
                       rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
                       className="mt-2 w-full rounded-xl border border-input bg-surface px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-1 focus:ring-primary"
                     />
                   </div>
-                  <button type="submit" className="btn-primary w-full">
-                    Send message
+                  {error && (
+                    <p className="text-xs text-red-500">{error}</p>
+                  )}
+                  <button type="submit" disabled={sending} className="btn-primary w-full disabled:opacity-60">
+                    {sending ? "Sending…" : "Send message"}
                   </button>
                 </form>
               )}
@@ -132,11 +207,15 @@ function CField({
   name,
   type = "text",
   required,
+  value,
+  onChange,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
     <div>
@@ -147,6 +226,8 @@ function CField({
         type={type}
         name={name}
         required={required}
+        value={value}
+        onChange={onChange}
         className="mt-2 w-full rounded-xl border border-input bg-surface px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-1 focus:ring-primary"
       />
     </div>

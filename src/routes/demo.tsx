@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { SiteShell } from "@/components/SiteShell";
 import { PageHero } from "@/components/PageHero";
 import {
@@ -167,6 +168,55 @@ const faqs = [
 
 function DemoPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    company: "",
+    role: "",
+    workflow: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError(null);
+
+    const templateParams = {
+      title: "New Demo Request",
+      time: new Date().toLocaleString(),
+      ...formData,
+      message: `
+Email: ${formData.email}
+Company: ${formData.company}
+Role: ${formData.role}
+
+Workflow to automate:
+${formData.workflow || "Not specified"}
+      `.trim(),
+    };
+
+    try {
+      await emailjs.send(
+        "service_gpkmole",
+        "template_7xnt2qj",
+        templateParams,
+        "bBMebUMYk1P4zsdvp"
+      );
+      setSubmitted(true);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError("Failed to send your request. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <SiteShell>
@@ -263,18 +313,18 @@ function DemoPage() {
               {!submitted ? (
                 <form
                   className="mt-6 space-y-4"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSubmitted(true);
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <div className="grid gap-3 sm:grid-cols-2">
                     <label className="block text-xs">
                       <span className="text-muted-foreground">Work email</span>
                       <input
                         type="email"
+                        name="email"
                         required
                         placeholder="you@company.com"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                       />
                     </label>
@@ -282,8 +332,11 @@ function DemoPage() {
                       <span className="text-muted-foreground">Company</span>
                       <input
                         type="text"
+                        name="company"
                         required
                         placeholder="Acme Inc."
+                        value={formData.company}
+                        onChange={handleChange}
                         className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                       />
                     </label>
@@ -291,18 +344,20 @@ function DemoPage() {
                   <label className="block text-xs">
                     <span className="text-muted-foreground">Role</span>
                     <select
+                      name="role"
                       required
+                      value={formData.role}
+                      onChange={handleChange}
                       className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none"
-                      defaultValue=""
                     >
                       <option value="" disabled>
                         Select your role
                       </option>
-                      <option>Engineering / Platform</option>
-                      <option>Operations / Business</option>
-                      <option>Data / ML</option>
-                      <option>Security / Compliance</option>
-                      <option>Executive</option>
+                      <option value="Engineering / Platform">Engineering / Platform</option>
+                      <option value="Operations / Business">Operations / Business</option>
+                      <option value="Data / ML">Data / ML</option>
+                      <option value="Security / Compliance">Security / Compliance</option>
+                      <option value="Executive">Executive</option>
                     </select>
                   </label>
                   <label className="block text-xs">
@@ -310,13 +365,19 @@ function DemoPage() {
                       Workflow you'd like to see automated (optional)
                     </span>
                     <textarea
+                      name="workflow"
                       rows={3}
                       placeholder="e.g. claims triage, RFP response, ticket deflection..."
+                      value={formData.workflow}
+                      onChange={handleChange}
                       className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                     />
                   </label>
-                  <button type="submit" className="btn-primary w-full">
-                    Request demo <ArrowRight className="h-4 w-4" />
+                  {error && (
+                    <p className="text-xs text-red-500">{error}</p>
+                  )}
+                  <button type="submit" disabled={sending} className="btn-primary w-full disabled:opacity-60">
+                    {sending ? "Sending…" : <><span>Request demo</span> <ArrowRight className="h-4 w-4" /></>}
                   </button>
                   <p className="text-[10px] text-muted-foreground">
                     By submitting, you agree to our{" "}
